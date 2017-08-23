@@ -21,7 +21,7 @@ var queueMethods = {
     this.storage[this.count] = value;
   },
   dequeue: function() {
-    if(this.count - this.remove > 0) {
+    if(this.size() > 0) {
       this.remove++;
       var first = this.storage[this.remove];
       delete this.storage[this.remove];
