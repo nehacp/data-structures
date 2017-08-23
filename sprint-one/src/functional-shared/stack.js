@@ -4,9 +4,7 @@ var Stack = function() {
   var obj = {};
   obj.storage = {};
   obj.count = 0;
-  obj.size = stackMethods.size;
-  obj.push = stackMethods.push;
-  obj.pop = stackMethods.pop;
+  extend(obj, stackMethods);
   return obj;
 };
 
@@ -25,3 +23,9 @@ var stackMethods = {
     return last;
   }
 };
+
+var extend = function(obj1, obj2) {
+  for (var key in obj2) {
+    obj1[key] = obj2[key];
+  }
+}
