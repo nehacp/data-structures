@@ -5,22 +5,25 @@ var Queue = function() {
   var storage = {};
 
   // Implement the methods below
-  var count = 0;
+  var index = 0;
+  var removed = 0;
 
   someInstance.enqueue = function(value) {
-    count++;
-    storage[count] = value;
+    index++;
+    storage[index] = value;
   };
 
   someInstance.dequeue = function() {
-    var last = storage[count];
-    delete storage[count];
-    count--;
-    return last;
+    if (someInstance.size() > 0) {
+      removed++;
+      var first = storage[removed];
+      delete storage[removed];
+      return first;
+    }
   };
 
   someInstance.size = function() {
-    return (count < 0) ? 0 : count;
+    return index - removed;
   };
 
   return someInstance;
