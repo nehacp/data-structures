@@ -7,7 +7,7 @@ var Queue = function() {
   obj.remove = 0;
   obj.storage = {};
 
-  extend(obj, queueMethods);
+  _.extend(obj, queueMethods);
 
   return obj;
 };
@@ -29,9 +29,3 @@ var queueMethods = {
     }
   }
 };
-
-var extend = function(obj1, obj2) {
-    for (var key in obj2) {
-      obj1[key] = obj2[key];
-    }
-}
