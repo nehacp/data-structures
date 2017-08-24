@@ -11,20 +11,19 @@ var Queue = function() {
 };
 
 var queueMethods = {
-	size: function() {
-    	return this.count - this.remove;
-	},
-	enqueue: function(value) {
-	    this.count++;
-	    this.storage[this.count] = value;
-	},
-
-	dequeue:  function() {
-	    if (this.size() > 0) {
-	      this.remove++;
-	      var first = this.storage[this.remove];
-	      delete this.storage[this.remove];
-	      return first;
-	    }
-	}
+  size: function() {
+    return this.count - this.remove;
+  },
+  enqueue: function(value) {
+    this.count++;
+    this.storage[this.count] = value;
+  },
+  dequeue: function() {
+    if (this.size() > 0) {
+      this.remove++;
+      var first = this.storage[this.remove];
+      delete this.storage[this.remove];
+      return first;
+    }
+  }
 };
