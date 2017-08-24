@@ -21,20 +21,19 @@ treeMethods.contains = function(target) {
   //check if self has value
       bool = node.value === target;
       //if yes, return true;
-      if (bool) {
-        return true;
-      } else {
+    if (!bool) {
         //if not, check children length
-        if (node.children.length){
-          // if length, loop over children
-          //check if each child has value
-          bool = _.any(node.children, search);
-          //if child has value, return true
-          if (bool) {
-            return true;
-          }
+      if (node.children.length){
+        // if length, loop over children
+        //check if each child has value
+        bool = _.any(node.children, search);
+        //if child has value, return true
+        if (bool) {
+          return true;
         }
       }
+    }
+    return bool;
   };
   search(this);
   return bool;
