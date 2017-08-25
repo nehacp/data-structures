@@ -6,12 +6,12 @@ var BinarySearchTree = function(value) {
 
 BinarySearchTree.prototype.insert = function(value) {
 	//log(n) time
-    if (value < this.value) {
-    	(this.left) ? this.left = this.left.insert(value) : this.left = new BinarySearchTree(value);
-  	} else {
-    	(this.right) ? this.right = this.right.insert(value) : this.right = new BinarySearchTree(value);
-    }
-   	return this;
+  if (value < this.value) {
+  	(this.left) ? this.left = this.left.insert(value) : this.left = new BinarySearchTree(value);
+	} else {
+   (this.right) ? this.right = this.right.insert(value) : this.right = new BinarySearchTree(value);
+  }
+ 	return this;
 };
   
   //var tree = new BinarySearchTree(value);
@@ -34,11 +34,11 @@ BinarySearchTree.prototype.contains = function(value) {
 BinarySearchTree.prototype.depthFirstLog = function(callback) {
 	//linear time
 	callback(this.value);
-	if (this.left){
-		this.left.depthFirstLog(callback);
+	if (this.left) {
+	  this.left.depthFirstLog(callback);
 	}
-	if (this.right){
-		this.right.depthFirstLog(callback)
+	if (this.right) {
+		this.right.depthFirstLog(callback);
 	}
 };
 
