@@ -4,6 +4,7 @@ var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
   this._count = 0;
+  this._keys = {};
 };
 
 HashTable.prototype.insert = function(k, v) {
@@ -12,16 +13,17 @@ HashTable.prototype.insert = function(k, v) {
     this._count++;
     index = this._count;
   }
+  this._keys[k] = index;
   this._storage.set(index, v);
 };
 
 HashTable.prototype.retrieve = function(k) {
-  var index = getIndexBelowMaxForKey(k, this._limit);
+  var index = this._keys[k];
   return this._storage.get(index);
 };
 
 HashTable.prototype.remove = function(k) {
-  var index = getIndexBelowMaxForKey(k, this._limit);
+  var index = this._keys[k];
   var erase = function (value, key, storage) {
     if (key === index){
        storage.splice(key, 1);
