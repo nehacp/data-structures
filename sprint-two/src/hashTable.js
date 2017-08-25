@@ -3,33 +3,33 @@
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  this._count = 0;
-  this._keys = {};
 };
 
 HashTable.prototype.insert = function(k, v) {
+  //constant time
   var index = getIndexBelowMaxForKey(k, this._limit);
-  if (!this._keys[index]){
-    this._count++;
-    index = this._count;
-  }
-  this._keys[k] = index;
-  this._storage.set(index, v);
+  var spot = this._storage.get(index);
+   if (!spot){
+   	spot = {};
+   }
+   spot[k] = v;
+   this._storage.set(index, spot);
 };
 
 HashTable.prototype.retrieve = function(k) {
-  var index = this._keys[k];
-  return this._storage.get(index);
+  //constant time
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  return this._storage.get(index)[k];
 };
 
 HashTable.prototype.remove = function(k) {
-  var index = this._keys[k];
-  var erase = function (value, key, storage) {
-    if (key === index){
-       storage.splice(key, 1);
+  // linear time
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  this._storage.each((value, i, storage) => {
+    if (i === index) {
+       delete storage[i][k];
     }
-  }
-  this._storage.each(erase);
+  });
 };
 
 
