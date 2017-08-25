@@ -9,9 +9,11 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  if (index === 0){
-    this._count++;
-    index = this._count;
+  for (var i in this._keys){
+    if (this._keys[i] === index) {
+      this._count++;
+      index = this._count;
+    }
   }
   this._keys[k] = index;
   this._storage.set(index, v);
