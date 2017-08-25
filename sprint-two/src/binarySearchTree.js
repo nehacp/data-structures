@@ -13,7 +13,17 @@ BinarySearchTree.prototype.insert = function(value) {
 };
 
 BinarySearchTree.prototype.contains = function(value) {
-
+  //check if current object === value
+  if (this.value === value) {
+    return true;
+  } else {
+  // check if its smaller or higher
+    if (value < this.value) {
+      return (this.left.contains) ? this.left.contains(value) : false;
+    } else {
+      return (this.right.contains) ? this.right.contains(value) : false;
+    }
+  }
 };
 
 BinarySearchTree.prototype.depthFirstLog = function() {
@@ -36,4 +46,3 @@ BinarySearchTree.prototype.traverse = function(newTree) {
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-
