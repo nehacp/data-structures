@@ -57,17 +57,15 @@ HashTable.prototype.remove = function(k) {
 };
 
 HashTable.prototype._resize = function(limit) {
-  var tempStorage = [];
-  this._storage.each((value, i, storage) => {
-    if (value) {
-      _.each(value, tuple => tempStorage.push(tuple));
-    }
-  });
+  var tempStorage = this._storage;
   this._limit = Math.max(limit, 8);
   this._size = 0; 
   this._storage = LimitedArray(this._limit);
-  
-  _.each(tempStorage, (tuple) => this.insert(tuple[0], tuple[1]));
+  tempStorage.each((value, i, storage) => {
+    if (value) {
+      _.each(value, tuple => this.insert(tuple[0], tuple[1]));
+    }
+  });
 };
 
 /*
