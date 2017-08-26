@@ -13,7 +13,12 @@ describe('tree', function() {
 
   it('should add children to the tree', function() {
     tree.addChild(5);
+    tree.addChild(6);
     expect(tree.children[0].value).to.equal(5);
+    expect(tree.children[1].parent).to.eql(tree);
+    tree.children[0].addChild(1);
+    expect(tree.children[0].children[0].parent).to.eql(tree.children[0]);
+    
   });
 
   it('should return true for a value that the tree contains', function() {
@@ -39,6 +44,15 @@ describe('tree', function() {
     tree.children[1].addChild(8);
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
+  });
+
+  it('should disassociate parent with child', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.removeFromParent(7);
+    expect(tree.children[0].children[0]).to.equal(undefined);
+    expect(tree.contains(7)).to.equal(false);
   });
 
 });
