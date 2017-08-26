@@ -9,17 +9,20 @@ HashTable.prototype.insert = function(k, v) {
   //constant time
   var index = getIndexBelowMaxForKey(k, this._limit);
   var spot = this._storage.get(index);
-   if (!spot){
-   	spot = {};
-   }
-   spot[k] = v;
-   this._storage.set(index, spot);
+  if (!spot) {
+    spot = [];
+  }
+  var place = spot.findIndex(tuple => tuple[0] === k);
+  (place !== -1) ? spot[place][1] = v : spot.push([k, v]);
+  this._storage.set(index, spot);
 };
 
 HashTable.prototype.retrieve = function(k) {
   //constant time
   var index = getIndexBelowMaxForKey(k, this._limit);
-  return this._storage.get(index)[k];
+  var spot = this._storage.get(index);
+  var result = _.find(spot, (tuple => tuple[0] === k));
+  return (result) ? result[1] : undefined; 
 };
 
 HashTable.prototype.remove = function(k) {
@@ -27,7 +30,17 @@ HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage.each((value, i, storage) => {
     if (i === index) {
-       delete storage[i][k];
+      _.any(value, (tuple, j) => {
+        if (tuple[0] === k) {
+          value.splice(j, 1);
+          return true;
+        }
+        return false;
+      });
+
+
+
+      //delete storage[i][k];
     }
   });
 };
