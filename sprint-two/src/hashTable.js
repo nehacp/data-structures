@@ -6,7 +6,7 @@ var HashTable = function() {
 };
 
 HashTable.prototype.insert = function(k, v) {
-  //constant time
+  //linear time
   var index = getIndexBelowMaxForKey(k, this._limit);
   var spot = this._storage.get(index);
   if (!spot) {
@@ -18,7 +18,7 @@ HashTable.prototype.insert = function(k, v) {
 };
 
 HashTable.prototype.retrieve = function(k) {
-  //constant time
+  //linear time
   var index = getIndexBelowMaxForKey(k, this._limit);
   var spot = this._storage.get(index);
   var result = _.find(spot, (tuple => tuple[0] === k));
@@ -37,10 +37,6 @@ HashTable.prototype.remove = function(k) {
         }
         return false;
       });
-
-
-
-      //delete storage[i][k];
     }
   });
 };
