@@ -10,7 +10,6 @@ setPrototype.add = function(item) {
   // constant time
   item = JSON.stringify(item);
   if (!item) {
-    console.log(this);
     throw new Error('Input not valid');
   }
   this._storage[item] = item;
