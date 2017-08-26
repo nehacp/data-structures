@@ -10,12 +10,14 @@ var Tree = function(value) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
+  //constant time O(1)
   var node = Tree(value);
   node.parent = this;
   this.children.push(node);
 };
 
 treeMethods.contains = function(target) {
+  //linear time
   if (this.value === target) {
     return true;
   } else {
@@ -23,57 +25,16 @@ treeMethods.contains = function(target) {
       return _.any(this.children, child => child.contains(target));
     }
   }
-
-/*
-  var bool = false;
-  function search(node) {
-  //check if self has value
-      bool = node.value === target;
-      //if yes, return true;
-    if (!bool) {
-        //if not, check children length
-      if (node.children.length){
-        // if length, loop over children
-        //check if each child has value
-        bool = _.any(node.children, search);
-        //if child has value, return true
-        if (bool) {
-          return true;
-        }
-      }
-    }
-    return bool;
-  };
-
-  search(this);
-  
-  return bool;
-  /*
-  if (this.value === target){
-      return true;
-  }
-  if (this.children.length){
-    let result = _.any(this.children, child => {
-      
-      child.contains(target));
-    if (result){
-      return true;
-    }*/ 
 };
 
 treeMethods.removeFromParent = function(value) {
-  //check if tree has value
+  //linear time O(n)
   if (this.value === value) {
-  //if so
-    //remove node from parent list
     var child = this.parent.children.indexOf(this);
     this.parent.children.splice(child, 1);
-    //change parent property to null
     this.parent = null;
     return true;
-  //else if not so
   } else {
-    //check for tree children
     if (this.children.length) {
       return _.any(this.children, child => {
         return child.removeFromParent(value) === true;
@@ -84,6 +45,7 @@ treeMethods.removeFromParent = function(value) {
 };
 
 treeMethods.traverse = function(callback) {
+  //linear time O(n)
   callback(this.value);
   if (this.children.length) {
     _.each(this.children, child => {
