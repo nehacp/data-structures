@@ -18,12 +18,11 @@ HashTable.prototype.insert = function(k, v) {
   } else {
     spot.push([k, v]);
     this._size++;
-    if (this._size > Math.floor(this._limit * 0.75)) {
-      this._resize(this._limit * 2);
-    }
   }
-  
   this._storage.set(index, spot);
+  if (this._size >= Math.floor(this._limit * 0.75)) {
+    this._resize(this._limit * 2);
+  }
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -51,16 +50,26 @@ HashTable.prototype.remove = function(k) {
     }
   });
 
-  if (this._size < Math.floor(this._limit * 0.25)) {
-    this._resize(Math.floor(this._limit / 2));
+  if (this._size <= Math.floor(this._limit * 0.25)) {
+    this._resize(this._limit / 2);
   }
-
   return temp[1];
 };
 
-HashTable.prototype._resize = function() {
-  // 
+HashTable.prototype._resize = function(limit) {
+  var tempStorage = [];
+  this._storage.each((value, i, storage) => {
+    if (value) {
+      _.each(value, tuple => tempStorage.push(tuple));
+    }
+  });
+  this._limit = Math.max(limit, 8);
+  this._size = 0; 
+  this._storage = LimitedArray(this._limit);
+  
+  _.each(tempStorage, (tuple) => this.insert(tuple[0], tuple[1]));
 };
+
 /*
  * Complexity: What is the time complexity of the above functions?
  */

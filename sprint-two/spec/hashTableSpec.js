@@ -32,6 +32,7 @@ describe('hashTable', function() {
   it('should not contain values that were removed', function() {
     hashTable.insert('Steven', 'Tyler');
     hashTable.remove('Steven');
+    expect(hashTable._size).to.equal(0);
     expect(hashTable.retrieve('Steven')).to.equal(undefined);
   });
 
@@ -48,7 +49,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -58,7 +59,16 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should have the right size', function() {
+    _.each(people, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      hashTable.insert(firstName, lastName);
+    });
+    expect(hashTable._size).to.equal(7);
+  });
+
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -73,22 +83,4 @@ describe('hashTable', function() {
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
   });
-
-  xit ('should be able to retrieve everything correctly after resizing (with random insertion/removal)', function() {
-    var valuesInHash = [];
-    for (var i = 0; i < 10000; i++) {
-      var randomVar = Math.random();
-      var randomVal = Math.floor(Math.random() * 1000);
-      if (randomVar > 0.5) {
-        hashTable.insert(randomVal, randomVal);
-        valuesInHash[randomVal] = randomVal;
-      } else {
-        hashTable.remove(randomVal);
-        valuesInHash[randomVal] = undefined;
-      }
-      expect(hashTable.retrieve(randomVal)).to.equal(valuesInHash[randomVal]);
-    }
-  });
-
-
 });
