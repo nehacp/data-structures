@@ -7,7 +7,7 @@ var LinkedList = function() {
     //constant time
     var node = Node(value);
     node.contains = this.contains;
-    if(this.head === null) {
+    if (this.head === null) {
       this.head = node;
       this.tail = node;
     } else {
@@ -19,7 +19,7 @@ var LinkedList = function() {
   list.removeHead = function() {
     //constant time
     var output = this.head;
-    if(this.head.next === null) {
+    if (this.head.next === null) {
       this.head = null;
       this.tail = null;
     } else {
@@ -38,16 +38,6 @@ var LinkedList = function() {
       current = current.next;
     }
     return false;
-    /*
-    var self = this;
-    if (!self.value) {
-      self = this.head;
-    }
-    if (self.value === target) {
-      return true;
-    } else {
-      return (self.next) ? this.contains.call(self.next, target) : false;
-    }*/
   };
   return list;
 };
