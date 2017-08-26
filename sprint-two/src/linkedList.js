@@ -6,6 +6,7 @@ var LinkedList = function() {
   list.addToTail = function(value) {
     //constant time
     var node = Node(value);
+    node.contains = this.contains;
     if(this.head === null) {
       this.head = node;
       this.tail = node;
@@ -29,6 +30,15 @@ var LinkedList = function() {
 
   list.contains = function(target) {
     //linear time
+    var current = this.head;
+    while (current) {
+      if (current.value === target) {
+        return true;
+      }
+      current = current.next;
+    }
+    return false;
+    /*
     var self = this;
     if (!self.value) {
       self = this.head;
@@ -37,7 +47,7 @@ var LinkedList = function() {
       return true;
     } else {
       return (self.next) ? this.contains.call(self.next, target) : false;
-    }
+    }*/
   };
   return list;
 };
@@ -51,6 +61,7 @@ var Node = function(value) {
 
   return node;
 };
+
 
 
 /*
