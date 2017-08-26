@@ -15,6 +15,9 @@ HashTable.prototype.insert = function(k, v) {
   var place = spot.findIndex(tuple => tuple[0] === k);
   (place !== -1) ? spot[place][1] = v : spot.push([k, v]);
   this._storage.set(index, spot);
+  if (this.getLength() > this._limit * 0.75) {
+    this.increaseSize();
+  }
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -41,8 +44,19 @@ HashTable.prototype.remove = function(k) {
   });
 };
 
+HashTable.prototype.getLength = function() {
+  var count = 0;
+  this._storage.each((value) => {
+    if (value) {
+      count++;
+    }
+  });
+  return count;
+};
 
-
+HashTable.prototype.increaseSize = function() {
+  // 
+};
 /*
  * Complexity: What is the time complexity of the above functions?
  */
