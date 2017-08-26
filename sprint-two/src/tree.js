@@ -39,6 +39,17 @@ treeMethods.contains = function(target) {
   search(this);
   
   return bool;
+  /*
+  if (this.value === target){
+      return true;
+  }
+  if (this.children.length){
+    let result = _.any(this.children, child => {
+      
+      child.contains(target));
+    if (result){
+      return true;
+    }*/ 
 };
 
 

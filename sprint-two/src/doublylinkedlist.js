@@ -42,6 +42,19 @@ var DoublyLinkedList = function() {
     }
     return output.value;
   };
+  
+  list.removeTail = function() {
+    var output = this.tail;
+    if (!this.tail.previous) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.tail = this.tail.previous;
+      this.tail.next = null;
+    }
+    return output.value;
+  
+  };
 
   list.contains = function(target) {
     //linear time
