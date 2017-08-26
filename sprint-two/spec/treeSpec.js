@@ -50,7 +50,7 @@ describe('tree', function() {
     tree.addChild(5);
     tree.addChild(6);
     tree.children[0].addChild(7);
-    tree.removeFromParent(7);
+    console.log(tree.removeFromParent(7));
     expect(tree.children[0].children[0]).to.equal(undefined);
     expect(tree.contains(7)).to.equal(false);
   });

@@ -61,15 +61,17 @@ treeMethods.removeFromParent = function(value) {
     this.parent.children.splice(child, 1);
     //change parent property to null
     this.parent = null;
+    return true;
   //else if not so
   } else {
     //check for tree children
     if (this.children.length) {
-      _.each(this.children, child => {
-        child.removeFromParent(value);
+      return _.any(this.children, child => {
+        return child.removeFromParent(value) === true;
       });
     }
   }
+  return false;
 };
 
 
