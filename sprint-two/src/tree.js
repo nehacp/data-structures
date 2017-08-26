@@ -16,6 +16,15 @@ treeMethods.addChild = function(value) {
 };
 
 treeMethods.contains = function(target) {
+  if (this.value === target) {
+    return true;
+  } else {
+    if (this.children.length) {
+      return _.any(this.children, child => child.contains(target));
+    }
+  }
+
+/*
   var bool = false;
   function search(node) {
   //check if self has value

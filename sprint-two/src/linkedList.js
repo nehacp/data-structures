@@ -6,7 +6,6 @@ var LinkedList = function() {
   list.addToTail = function(value) {
     //constant time
     var node = Node(value);
-
     if(this.head === null) {
       this.head = node;
       this.tail = node;
@@ -30,16 +29,16 @@ var LinkedList = function() {
 
   list.contains = function(target) {
     //linear time
-    function findValue(node) {
-      if(node.value === target) {
-        return true;
-      } else {
-        return (node.next) ? findValue(node.next) : false;
-      }
+    var self = this;
+    if (!self.value) {
+      self = this.head;
     }
-    return findValue(this.head);
+    if (self.value === target) {
+      return true;
+    } else {
+      return (self.next) ? this.contains.call(self.next, target) : false;
+    }
   };
-
   return list;
 };
 
@@ -52,6 +51,7 @@ var Node = function(value) {
 
   return node;
 };
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
