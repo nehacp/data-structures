@@ -50,9 +50,16 @@ describe('tree', function() {
     tree.addChild(5);
     tree.addChild(6);
     tree.children[0].addChild(7);
-    console.log(tree.removeFromParent(7));
     expect(tree.children[0].children[0]).to.equal(undefined);
     expect(tree.contains(7)).to.equal(false);
+  });
+
+  it('should run a callback for each value in tree', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[1].addChild(7);
+    tree.children[1].addChild(8);
+    tree.traverse(function(value) { console.log(value); });
   });
 
 });
