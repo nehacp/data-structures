@@ -1,7 +1,5 @@
 var BinarySearchTree = function(value) {
   this.value = value;
-  this._leftDepth = 0;
-  this._rightDepth = 0;
 };
 
 BinarySearchTree.prototype.insert = function(value) {
@@ -14,18 +12,16 @@ BinarySearchTree.prototype.insert = function(value) {
   
   this._leftDepth = this.depth(this.left);
   this._rightDepth = this.depth(this.right);
-  var leftSize = Math.floor(this._leftDepth / this._rightDepth);
-  var rightSize = Math.floor(this._rightDepth / this._leftDepth);
-  if (leftSize >= 2 && leftSize !== Infinity) {
+  if (Math.floor(this._leftDepth / this._rightDepth) >= 2) {
     return this.reBalance('left');
-  } else if (rightSize >= 2 && rightSize !== Infinity) {
+  } else if (Math.floor(this._rightDepth / this._leftDepth) >= 2) {
     return this.reBalance('right');
   } 
   return this;
 };
 
 BinarySearchTree.prototype.contains = function(value) { 
-  //log(n)
+  //log(n) time
   if (this.value === value) {
     return true;
   } else {
@@ -54,44 +50,20 @@ BinarySearchTree.prototype.depth = function(side) {
 };
 
 BinarySearchTree.prototype.reBalance = function(side) {
-  //variable to store new root value
-  //console.log(this);
-  var temp;
-  // if side is left
-  if (side === 'left') {
-    // one-level down with its right
-    temp = this.left.right;
-  } else {
-    // else side is right
-    // one-level down with its left
-    temp = this.right.left;
-  }
+  //linear time
+  //get new root value for balanced tree
+  var temp = side === 'left' ? this.left.right : this.right.left;
+  //if root value is undefined, its not too imbalanced, go back to current tree
   if (!temp) {
     return this;
   }
-  //console.log(temp);
-  // create temp binary tree with above node value
+  //create new tree with new root value
   var tree = new BinarySearchTree(temp.value);
+  //iterate over old tree and assign each value to new tree
   this.depthFirstLog(value => tree.insert(value));
-
-  // console.log('tree', tree);
-  
-  // call cb on every other value in the exisiting tree
-  this.value = tree.value;
-  this.left = tree.left;
-  this.right = tree.right;
-  this._leftDepth = tree._leftDepth;
-  this._rightDepth = tree._rightDepth;
-  console.log('this', tree);
-  return this;
-  //  new theory
-  // collect all values by iterating and then populate all of them to new bst
+  //assign new tree to current tree and return it back to previous call
+  return Object.assign(this, tree);
 };
-
-// from exisiting head/root check its left and right tree
-// check one level deep and operate on its left/right
-//on heavier side, check its opposite side
-
 
 /*
  * Complexity: What is the time complexity of the above functions?
