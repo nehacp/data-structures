@@ -5,25 +5,27 @@ var BinarySearchTree = function(value) {
 };
 
 BinarySearchTree.prototype.insert = function(value) {
-	//log(n) time
+  //log(n) time
   if (value < this.value) {
-    (this.left) ? this.left = this.left.insert(value) : this.left = new BinarySearchTree(value);
+    this.left = (this.left) ? this.left.insert(value) : new BinarySearchTree(value);
   } else if (value > this.value) {
-    (this.right) ? this.right = this.right.insert(value) : this.right = new BinarySearchTree(value);
+    this.right = (this.right) ? this.right.insert(value) : new BinarySearchTree(value);
   } 
   
   this._leftDepth = this.depth(this.left);
   this._rightDepth = this.depth(this.right);
-  if (this._leftDepth / this._rightDepth > 2) {
-    this.rebalance('left');
-  } else if (this._rightDepth / this._leftDepth > 2) {
-    this.rebalance('right');
+  var leftSize = Math.ceil(this._leftDepth / this._rightDepth);
+  var rightSize = Math.ceil(this._rightDepth / this._leftDepth);
+  if (leftSize > 2 && leftSize !== Infinity) {
+    return this.reBalance('left');
+  } else if (rightSize > 2 && rightSize !== Infinity) {
+    return this.reBalance('right');
   } 
   return this;
 };
 
-BinarySearchTree.prototype.contains = function(value) {
-	//log(n)
+BinarySearchTree.prototype.contains = function(value) { 
+  //log(n)
   if (this.value === value) {
     return true;
   } else {
@@ -51,10 +53,10 @@ BinarySearchTree.prototype.depth = function(side) {
   return (side) ? Math.max(this.depth(side.left), this.depth(side.right)) + 1 : 0;
 };
 
-BinarySearchTree.prototype.rebalance = function(side) {
-  //
+BinarySearchTree.prototype.reBalance = function(side) {
+  //variable to store new root value
+  //console.log(this);
   var temp;
-  var x = this.value;
   // if side is left
   if (side === 'left') {
     // one-level down with its right
@@ -64,14 +66,21 @@ BinarySearchTree.prototype.rebalance = function(side) {
     // one-level down with its left
     temp = this.right.left;
   }
-    this.value = temp.value;
-
-    this.insert(x);
+  if (!temp) {
+    return;
+  }
+  //console.log(temp);
   // create temp binary tree with above node value
- // var tree = new BinarySearchTree(temp.value);
-  // call cb on every other value in the exisiting tree
-  this.depthFirstLog(this.insert);
+  var tree = new BinarySearchTree(temp.value);
+  this.depthFirstLog(value => tree.insert(value));
 
+  // console.log('tree', tree);
+  
+  // call cb on every other value in the exisiting tree
+  this.value = tree.value;
+  this.left = tree.left;
+  this.right = tree.right;
+  console.log('this', this);
   //  new theory
   // collect all values by iterating and then populate all of them to new bst
 };
