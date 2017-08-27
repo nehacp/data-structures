@@ -16,8 +16,9 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(3);
     binarySearchTree.insert(12);
     binarySearchTree.insert(11);
-    expect(binarySearchTree.left.value).to.equal(3);
-    expect(binarySearchTree.right.value).to.equal(11);
+    expect(binarySearchTree.value).to.equal(3);
+    expect(binarySearchTree.left.value).to.equal(2);
+    expect(binarySearchTree.right.left.value).to.equal(10);
   });
 
   it('should have a working "contains" method', function() {
@@ -37,7 +38,7 @@ describe('binarySearchTree', function() {
     expect(array).to.eql([3, 2, 10]);
   });
 
-  it('should return the max depth of a tree"', function() {    
+  it('should return the max depth of a tree', function() {    
     binarySearchTree.insert(5);
     binarySearchTree.insert(11);
     binarySearchTree.insert(3);
@@ -45,17 +46,27 @@ describe('binarySearchTree', function() {
     expect(binarySearchTree._rightDepth).to.equal(1);
   });
 
-  it('should rebalance the tree"', function() {    
+  it('should rebalance the tree', function() {    
     binarySearchTree.insert(5);
     binarySearchTree.insert(11);
     binarySearchTree.insert(3);
     binarySearchTree.insert(8);
     binarySearchTree.insert(2);
+    binarySearchTree.insert(1);
     binarySearchTree.insert(4);
     binarySearchTree.insert(7);
     binarySearchTree.insert(9);
     expect(binarySearchTree._leftDepth).to.equal(3);
     expect(binarySearchTree._rightDepth).to.equal(2);
     expect(binarySearchTree.value).to.equal(8);
+  });
+
+  it('should rebalance the tree if one side has no values', function() {    
+    binarySearchTree.insert(11);
+    binarySearchTree.insert(12);
+    binarySearchTree.insert(13);
+    expect(binarySearchTree._leftDepth).to.equal(1);
+    expect(binarySearchTree._rightDepth).to.equal(2);
+    expect(binarySearchTree.value).to.equal(11);
   });
 });

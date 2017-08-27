@@ -12,9 +12,9 @@ BinarySearchTree.prototype.insert = function(value) {
   
   this._leftDepth = this.depth(this.left);
   this._rightDepth = this.depth(this.right);
-  if (Math.floor(this._leftDepth / this._rightDepth) >= 2) {
+  if (this._leftDepth - this._rightDepth >= 2) {
     return this.reBalance('left');
-  } else if (Math.floor(this._rightDepth / this._leftDepth) >= 2) {
+  } else if (this._rightDepth - this._leftDepth >= 2) {
     return this.reBalance('right');
   } 
   return this;
@@ -51,16 +51,18 @@ BinarySearchTree.prototype.depth = function(side) {
 
 BinarySearchTree.prototype.reBalance = function(side) {
   //linear time
+  var temp;
   //get new root value for balanced tree
-  var temp = side === 'left' ? this.left.right : this.right.left;
-  //if root value is undefined, its not too imbalanced, go back to current tree
-  if (!temp) {
-    return this;
+  if (side === 'left') {
+    temp = (this.left.right) ? this.left.right : this.left.left;
+  } else {
+    temp = (this.right.left) ? this.right.left : this.right.right;
   }
   //create new tree with new root value
   var tree = new BinarySearchTree(temp.value);
   //iterate over old tree and assign each value to new tree
   this.depthFirstLog(value => tree.insert(value));
+  console.log(tree);
   //assign new tree to current tree and return it back to previous call
   return Object.assign(this, tree);
 };
