@@ -14,11 +14,11 @@ BinarySearchTree.prototype.insert = function(value) {
   
   this._leftDepth = this.depth(this.left);
   this._rightDepth = this.depth(this.right);
-  var leftSize = Math.ceil(this._leftDepth / this._rightDepth);
-  var rightSize = Math.ceil(this._rightDepth / this._leftDepth);
-  if (leftSize > 2 && leftSize !== Infinity) {
+  var leftSize = Math.floor(this._leftDepth / this._rightDepth);
+  var rightSize = Math.floor(this._rightDepth / this._leftDepth);
+  if (leftSize >= 2 && leftSize !== Infinity) {
     return this.reBalance('left');
-  } else if (rightSize > 2 && rightSize !== Infinity) {
+  } else if (rightSize >= 2 && rightSize !== Infinity) {
     return this.reBalance('right');
   } 
   return this;
@@ -67,7 +67,7 @@ BinarySearchTree.prototype.reBalance = function(side) {
     temp = this.right.left;
   }
   if (!temp) {
-    return;
+    return this;
   }
   //console.log(temp);
   // create temp binary tree with above node value
@@ -80,7 +80,10 @@ BinarySearchTree.prototype.reBalance = function(side) {
   this.value = tree.value;
   this.left = tree.left;
   this.right = tree.right;
-  console.log('this', this);
+  this._leftDepth = tree._leftDepth;
+  this._rightDepth = tree._rightDepth;
+  console.log('this', tree);
+  return this;
   //  new theory
   // collect all values by iterating and then populate all of them to new bst
 };
