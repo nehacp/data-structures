@@ -3,7 +3,7 @@ var BinarySearchTree = function(value) {
 };
 
 BinarySearchTree.prototype.insert = function(value) {
-  //log(n) time
+  //log(n) time || n*nlog(n)
   if (value < this.value) {
     this.left = (this.left) ? this.left.insert(value) : new BinarySearchTree(value);
   } else if (value > this.value) {
@@ -37,7 +37,7 @@ BinarySearchTree.prototype.depthFirstLog = function(callback) {
 };
 
 BinarySearchTree.prototype.depth = function(side) {
-  //log(n) time
+  //linear time
   return (side) ? Math.max(this.depth(side.left), this.depth(side.right)) + 1 : 0;
 };
 
@@ -53,7 +53,7 @@ BinarySearchTree.prototype.checkBalance = function() {
 };
 
 BinarySearchTree.prototype.reBalance = function(side) {
-  //linear time
+  //n*nlog(n) time
   var temp;
 
   if (side === 'left') {
