@@ -53,7 +53,7 @@ HashTable.prototype.remove = function(k) {
   if (this._size <= Math.floor(this._limit * 0.25)) {
     this._resize(this._limit / 2);
   }
-  return temp[1];
+  return (temp) ? temp[1] : undefined;
 };
 
 HashTable.prototype._resize = function(limit) {
