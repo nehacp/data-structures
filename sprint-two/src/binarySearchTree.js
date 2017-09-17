@@ -9,7 +9,8 @@ BinarySearchTree.prototype.insert = function(value) {
   } else if (value > this.value) {
     this.right = (this.right) ? this.right.insert(value) : new BinarySearchTree(value);
   } 
-  return this.checkBalance();
+  return this;
+  //return this.checkBalance();
 };
 
 BinarySearchTree.prototype.contains = function(value) { 
@@ -33,6 +34,22 @@ BinarySearchTree.prototype.depthFirstLog = function(callback) {
   }
   if (this.right) {
     this.right.depthFirstLog(callback);
+  }
+};
+
+BinarySearchTree.prototype.breadthFirstLog = function(callback) {
+  //linear time
+  let queue = [this];
+  
+  while (queue.length) {
+    let node = queue.shift();
+    callback(node.value);
+    if (node.left) {
+      queue.push(node.left);
+    }
+    if (node.right) {
+      queue.push(node.right);
+    }
   }
 };
 
